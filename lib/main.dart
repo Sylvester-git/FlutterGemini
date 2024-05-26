@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gemini_app/app/app_init.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+import 'features/Home/home.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+Future<void> main() async {
+  try {
+    await AppInit.initSetUp();
+    runApp(const RootApp());
+  } catch (e) {
+    runApp(const RootApp());
   }
 }
+
+
