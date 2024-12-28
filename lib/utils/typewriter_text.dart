@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class TypeWriterTextWidget extends StatefulWidget {
   const TypeWriterTextWidget({
     super.key,
-    this.speed = const Duration(milliseconds: 25),
+    this.speed = const Duration(milliseconds: 10),
     required this.text,
     required this.textStyle,
     required this.soundEffect,
