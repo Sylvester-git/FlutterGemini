@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _textController = TextEditingController();
+    final TextEditingController textController = TextEditingController();
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -89,7 +89,7 @@ class Home extends StatelessWidget {
                               .read<GeminiCubitCubit>()
                               .changeSearchValue(text: value);
                         },
-                        controller: _textController,
+                        controller: textController,
                         cursorColor: Colors.white,
                         onTapOutside: (event) {
                           FocusManager.instance.primaryFocus!.unfocus();
@@ -115,7 +115,7 @@ class Home extends StatelessWidget {
                               ? null
                               : () {
                                   context.read<GeminiCubitCubit>().search();
-                                  _textController.clear();
+                                  textController.clear();
                                 },
                           borderRadius: const BorderRadius.all(
                             Radius.circular(100),
