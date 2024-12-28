@@ -24,11 +24,14 @@ jobs:
     - name: Install Flutter dependencies
       run: flutter pub get
 
+    - name: Analyze flutter code
+      run: flutter analyze
+
     - name: Build Flutter web
       run: flutter build web --dart-define=GEMINIAPIKEY=${{secrets.GEMINIAPIKEY}}
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITACTIONS_TOKEN }}
+        github_token: ${{secrets.GITACTIONS_TOKEN}}
         publish_dir: build/web
