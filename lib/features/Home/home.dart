@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController textController = TextEditingController();
-    final geminicubit = context.read<GeminiCubitCubit>();
+    final geminicubit = context.watch<GeminiCubitCubit>();
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -26,8 +26,8 @@ class Home extends StatelessWidget {
 
             //! Answer Page
             Expanded(
-                child: geminicubit.state.result == null ||
-                        geminicubit.state.result!.isEmpty
+                child: geminicubit.state.result!.isEmpty &&
+                        !geminicubit.state.isSearching
                     ? const Center(
                         child: Text(
                           'How can i help today',
