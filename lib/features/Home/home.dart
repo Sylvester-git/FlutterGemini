@@ -10,8 +10,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController textController = TextEditingController();
-    final geminicubit = context.watch<GeminiCubitCubit>();
+    final TextEditingController _textController = TextEditingController();
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -23,58 +22,52 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-
             //! Answer Page
             Expanded(
-                child: geminicubit.state.result!.isEmpty &&
-                        !geminicubit.state.isSearching
-                    ? const Center(
-                        child: Text(
-                          'How can i help today',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                          ),
+                child: Container(
+              color: Colors.transparent,
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height,
+              child: BlocBuilder<GeminiCubitCubit, GeminiState>(
+                builder: (context, geministate) {
+                  if (geministate.isSearching) {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(
+                        strokeWidth: 1,
+                      ),
+                    );
+                  }
+                  if (geministate.result == null ||
+                      geministate.result!.isEmpty) {
+                    return Center(
+                      child: TypeWriterTextWidget(
+                        text: 'How can i help you today',
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
                         ),
-                      )
-                    : BlocConsumer<GeminiCubitCubit, GeminiState>(
-                        listener: (context, geministate) {},
-                        builder: (context, geministate) {
-                          if (geministate.isSearching) {
-                            return const Center(
-                              child: CircularProgressIndicator.adaptive(
-                                strokeWidth: .5,
-                              ),
-                            );
-                          }
-                          if (geministate.result != null ||
-                              geministate.result!.isNotEmpty) {
-                            return SingleChildScrollView(
-                              child: TypeWriterTextWidget(
-                                soundEffect: AppAssets.typewrittersound,
-                                text: geministate.result?.toString() ?? "",
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            );
-                          }
-
-                          return const Center(
-                            child: Text(
-                              ' How can i help today',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          );
-                        },
-                      )),
+                        soundEffect: AppAssets.typewrittersound,
+                      ),
+                    );
+                  }
+                  if (geministate.result != null ||
+                      geministate.result!.isNotEmpty) {
+                    return SingleChildScrollView(
+                      child: TypeWriterTextWidget(
+                        soundEffect: AppAssets.typewrittersound,
+                        text: geministate.result?.toString() ?? "",
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            )),
             const SizedBox(
               height: 10,
             ),
@@ -96,11 +89,7 @@ class Home extends StatelessWidget {
                               .read<GeminiCubitCubit>()
                               .changeSearchValue(text: value);
                         },
-                        onFieldSubmitted: (value) {
-                          context.read<GeminiCubitCubit>().search();
-                          textController.clear();
-                        },
-                        controller: textController,
+                        controller: _textController,
                         cursorColor: Colors.white,
                         onTapOutside: (event) {
                           FocusManager.instance.primaryFocus!.unfocus();
@@ -122,12 +111,11 @@ class Home extends StatelessWidget {
                     BlocBuilder<GeminiCubitCubit, GeminiState>(
                       builder: (context, geministate) {
                         return InkWell(
-                          onTap: geministate.question.isEmpty ||
-                                  geministate.isSearching
+                          onTap: geministate.question.isEmpty
                               ? null
                               : () {
                                   context.read<GeminiCubitCubit>().search();
-                                  textController.clear();
+                                  _textController.clear();
                                 },
                           borderRadius: const BorderRadius.all(
                             Radius.circular(100),
