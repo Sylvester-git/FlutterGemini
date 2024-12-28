@@ -11,6 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController textController = TextEditingController();
+    final geminicubit = context.read<GeminiCubitCubit>();
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -22,47 +23,58 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
+
             //! Answer Page
             Expanded(
-                child: BlocConsumer<GeminiCubitCubit, GeminiState>(
-              listener: (context, geministate) {
-                // TODO: implement listener
-              },
-              builder: (context, geministate) {
-                if (geministate.isSearching) {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(
-                      strokeWidth: .5,
-                    ),
-                  );
-                }
-                if (geministate.result != null ||
-                    geministate.result!.isNotEmpty) {
-                  return SingleChildScrollView(
-                    child: TypeWriterTextWidget(
-                      soundEffect: AppAssets.typewrittersound,
-                      text: geministate.result?.toString() ?? "",
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  );
-                }
+                child: geminicubit.state.result == null ||
+                        geminicubit.state.result!.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'How can i help today',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )
+                    : BlocConsumer<GeminiCubitCubit, GeminiState>(
+                        listener: (context, geministate) {},
+                        builder: (context, geministate) {
+                          if (geministate.isSearching) {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(
+                                strokeWidth: .5,
+                              ),
+                            );
+                          }
+                          if (geministate.result != null ||
+                              geministate.result!.isNotEmpty) {
+                            return SingleChildScrollView(
+                              child: TypeWriterTextWidget(
+                                soundEffect: AppAssets.typewrittersound,
+                                text: geministate.result?.toString() ?? "",
+                                textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            );
+                          }
 
-                return const Center(
-                  child: Text(
-                    ' How can i help today',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                );
-              },
-            )),
+                          return const Center(
+                            child: Text(
+                              ' How can i help today',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          );
+                        },
+                      )),
             const SizedBox(
               height: 10,
             ),
@@ -110,7 +122,8 @@ class Home extends StatelessWidget {
                     BlocBuilder<GeminiCubitCubit, GeminiState>(
                       builder: (context, geministate) {
                         return InkWell(
-                          onTap: geministate.question.isEmpty || geministate.isSearching
+                          onTap: geministate.question.isEmpty ||
+                                  geministate.isSearching
                               ? null
                               : () {
                                   context.read<GeminiCubitCubit>().search();
