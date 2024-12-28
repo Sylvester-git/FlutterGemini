@@ -16,6 +16,9 @@ class RootApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           scaffoldBackgroundColor: HexColor.toHexColor('#151517'),
+          progressIndicatorTheme: const ProgressIndicatorThemeData(
+            color: Colors.white,
+          ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.white.withOpacity(.4),
