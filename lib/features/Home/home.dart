@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,17 +13,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController textController = TextEditingController();
     final scrollcontrollercubit = context.watch<ScrollControllerCubit>();
-
-    void moveToBottom() {
-      log(scrollcontrollercubit.state.scrollController.hasClients.toString());
-      if (scrollcontrollercubit.state.scrollController.hasClients) {
-        scrollcontrollercubit.state.scrollController.animateTo(
-          scrollcontrollercubit.state.scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.bounceIn,
-        );
-      }
-    }
 
     return Scaffold(
         body: SafeArea(
