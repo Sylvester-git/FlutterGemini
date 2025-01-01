@@ -1,3 +1,3 @@
 class AppAssets {
-  static String typewrittersound = 'assets/sounds/typewitter.mp3';
+  static String typewrittersound = 'assets/sounds/typewritter.mp3';
 }

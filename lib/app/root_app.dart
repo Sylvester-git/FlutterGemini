@@ -5,14 +5,22 @@ import 'package:flutter_gemini_app/features/Home/home.dart';
 import 'package:flutter_gemini_app/utils/extensions.dart';
 
 import '../cubits/gemini_cubit/gemini_cubit_cubit.dart';
+import '../cubits/scroll_controller/scroll_controller_cubit.dart';
 
 class RootApp extends StatelessWidget {
   const RootApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => instance<GeminiCubitCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => instance<GeminiCubitCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => ScrollControllerCubit(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           scaffoldBackgroundColor: HexColor.toHexColor('#151517'),

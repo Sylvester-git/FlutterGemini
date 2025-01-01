@@ -1,21 +1,23 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubits/scroll_controller/scroll_controller_cubit.dart';
 
 class TypeWriterTextWidget extends StatefulWidget {
   const TypeWriterTextWidget({
     super.key,
-    this.speed = const Duration(milliseconds: 10),
+    this.speed = const Duration(milliseconds: 5),
     required this.text,
     required this.textStyle,
-    required this.soundEffect,
   });
 
   final String text;
   final TextStyle textStyle;
   final Duration speed;
-  final String soundEffect;
 
   @override
   State<TypeWriterTextWidget> createState() => _TypeWriterTextWidgetState();
@@ -33,6 +35,17 @@ class _TypeWriterTextWidgetState extends State<TypeWriterTextWidget> {
     _startTyping();
   }
 
+  void moveToBottom() {
+    final controller = BlocProvider.of<ScrollControllerCubit>(context).state;
+    log('HELLO');
+    if (controller.scrollController.hasClients) {
+      log('HAS CLIENT');
+      controller.scrollController
+          .jumpTo(controller.scrollController.position.maxScrollExtent);
+      log(controller.scrollController.position.maxScrollExtent.toString());
+    }
+  }
+
   void _startTyping() {
     _timer = Timer.periodic(widget.speed, (timer) async {
       if (_currentIndex < widget.text.length) {
@@ -40,8 +53,7 @@ class _TypeWriterTextWidgetState extends State<TypeWriterTextWidget> {
           _displayedText += widget.text[_currentIndex];
           _currentIndex++;
         });
-        //! Play sound effect
-        await _audioPlayer.play(AssetSource(widget.soundEffect));
+        moveToBottom();
       } else {
         _timer.cancel();
       }

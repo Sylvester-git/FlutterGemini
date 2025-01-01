@@ -3,6 +3,7 @@
 import 'package:get_it/get_it.dart';
 
 import '../cubits/gemini_cubit/gemini_cubit_cubit.dart';
+import '../cubits/scroll_controller/scroll_controller_cubit.dart';
 import '../network/apis/gemini_api.dart';
 import '../network/repo/geminiRepo.dart';
 
@@ -13,7 +14,10 @@ Future<void> initDependencyInjector() async {
   instance.registerLazySingleton<BaseGeminiApi>(() => GeminiAiRepo());
 
   //! Cubits
-  instance.registerFactory<GeminiCubitCubit>(() => GeminiCubitCubit(baseGeminiRepo: instance()));
+  instance.registerFactory<GeminiCubitCubit>(
+      () => GeminiCubitCubit(baseGeminiRepo: instance()));
+  instance.registerLazySingleton<ScrollControllerCubit>(
+      () => ScrollControllerCubit());
 
   //!Repository
   instance.registerLazySingleton<BaseGeminiRepo>(() => GeminiRepo(instance()));

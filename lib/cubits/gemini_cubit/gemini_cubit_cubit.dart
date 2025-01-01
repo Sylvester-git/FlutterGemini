@@ -28,7 +28,10 @@ class GeminiCubitCubit extends Cubit<GeminiState> {
       emit(state.copyWith(isSearching: false, error: l, hasError: true));
       emit(state.copyWith(hasError: false));
     }, (r) {
-      emit(state.copyWith(isSearching: false, result: r, question: ''));
+      emit(state.copyWith(
+        isSearching: false,
+        result: r,
+      ));
     });
   }
 }

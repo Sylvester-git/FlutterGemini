@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gemini_app/utils/assets.dart';
 
 import '../../cubits/gemini_cubit/gemini_cubit_cubit.dart';
+import '../../cubits/scroll_controller/scroll_controller_cubit.dart';
 import '../../utils/typewriter_text.dart';
+import '../result_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -11,6 +14,19 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController textController = TextEditingController();
+    final scrollcontrollercubit = context.watch<ScrollControllerCubit>();
+
+    void moveToBottom() {
+      log(scrollcontrollercubit.state.scrollController.hasClients.toString());
+      if (scrollcontrollercubit.state.scrollController.hasClients) {
+        scrollcontrollercubit.state.scrollController.animateTo(
+          scrollcontrollercubit.state.scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.bounceIn,
+        );
+      }
+    }
+
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -39,28 +55,25 @@ class Home extends StatelessWidget {
                   }
                   if (geministate.result == null ||
                       geministate.result!.isEmpty) {
-                    return Center(
+                    return const Center(
                       child: TypeWriterTextWidget(
-                        text: 'How can i help you today',
-                        textStyle: const TextStyle(
+                        text: 'How can I help you today',
+                        speed: Duration(milliseconds: 10),
+                        textStyle: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                         ),
-                        soundEffect: AppAssets.typewrittersound,
                       ),
                     );
                   }
                   if (geministate.result != null ||
                       geministate.result!.isNotEmpty) {
                     return SingleChildScrollView(
-                      child: TypeWriterTextWidget(
-                        soundEffect: AppAssets.typewrittersound,
-                        text: geministate.result?.toString() ?? "",
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
+                      controller: scrollcontrollercubit.state.scrollController,
+                      child: ResultPage(
+                        question: geministate.question,
+                        resultOutput: geministate.result?.toString() ?? "",
                       ),
                     );
                   }

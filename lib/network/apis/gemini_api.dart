@@ -10,6 +10,9 @@ class GeminiAiRepo extends BaseGeminiApi {
   Future<String?> getResponseFromGemini({required String prompt}) async {
     final model = GenerativeModel(
       model: 'gemini-1.5-flash-latest',
+      generationConfig: GenerationConfig(
+        temperature: 0.7,
+      ),
       apiKey: const String.fromEnvironment('GEMINIAPIKEY'),
     );
 
