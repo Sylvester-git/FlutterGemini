@@ -15,6 +15,7 @@ dependencies:
   equatable: 
   dartz: 
   audioplayers: 
+  firebase_core:
   flutter_bloc: 
   flutter_markdown:
   device_preview: 

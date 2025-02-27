@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemini_app/app/app_init.dart';
 import 'package:flutter_gemini_app/bloc_observer.dart';
 
+
 import 'app/root_app.dart';
 
 void main() async {

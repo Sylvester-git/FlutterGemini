@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "67586664444",
+    "project_id": "flemini-4367c",
+    "storage_bucket": "flemini-4367c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67586664444:android:6bdc189b55165088b87479",
+        "android_client_info": {
+          "package_name": "com.flutechlabs.flemini"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3ODujV8FQJ--wzbyUv_rzJtyQLTEMN7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
