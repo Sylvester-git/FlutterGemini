@@ -23,6 +23,7 @@ class RootApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          useMaterial3: true,
           scaffoldBackgroundColor: HexColor.toHexColor('#151517'),
           progressIndicatorTheme: const ProgressIndicatorThemeData(
             color: Colors.white,

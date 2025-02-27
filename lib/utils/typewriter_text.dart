@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -6,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/scroll_controller/scroll_controller_cubit.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TypeWriterTextWidget extends StatefulWidget {
   const TypeWriterTextWidget({
     super.key,
-    this.speed = const Duration(milliseconds: 5),
+    this.speed = const Duration(microseconds: 10),
     required this.text,
     required this.textStyle,
   });
@@ -69,10 +72,63 @@ class _TypeWriterTextWidgetState extends State<TypeWriterTextWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _displayedText,
-      softWrap: true,
-      style: widget.textStyle,
+    return MarkdownBody(
+      data: _displayedText,
+      selectable: true,
+      styleSheet: MarkdownStyleSheet(
+        h1: const TextStyle(
+            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        h2: const TextStyle(
+            fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+        h3: const TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        p: const TextStyle(fontSize: 16, color: Colors.white),
+        tableBorder: TableBorder.all(
+          color: Colors.white,
+          style: BorderStyle.solid,
+        ),
+        tableHead: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        tableCellsPadding: const EdgeInsets.all(10),
+        tableBody: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        ),
+        blockquote: const TextStyle(
+          fontSize: 16,
+          fontStyle: FontStyle.italic,
+          color: Colors.white,
+          decoration: TextDecoration.underline,
+        ),
+        blockquoteDecoration: BoxDecoration(
+          color: Colors.grey.withOpacity(.2),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        code: const TextStyle(
+          fontSize: 14,
+          color: Colors.white,
+          fontStyle: FontStyle.italic,
+        ),
+        codeblockDecoration: BoxDecoration(
+          color: Colors.grey.withOpacity(.08),
+        ),
+        
+        listBullet: const TextStyle(
+            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+        h4: const TextStyle(
+            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
     );
+    //  Text(
+    //   _displayedText,
+    //   softWrap: true,
+    //   style: widget.textStyle,
+    // );
   }
 }

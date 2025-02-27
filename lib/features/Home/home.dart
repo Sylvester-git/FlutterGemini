@@ -94,6 +94,7 @@ class Home extends StatelessWidget {
                         onTapOutside: (event) {
                           FocusManager.instance.primaryFocus!.unfocus();
                         },
+                        maxLines: 3,
                         decoration: InputDecoration(
                           border: Theme.of(context).inputDecorationTheme.border,
                           enabledBorder: Theme.of(context)

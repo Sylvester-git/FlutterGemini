@@ -16,6 +16,7 @@ dependencies:
   dartz: 
   audioplayers: 
   flutter_bloc: 
+  flutter_markdown:
   device_preview: 
 
 dev_dependencies:
